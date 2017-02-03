@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class State {
 
     //окно в игровой мир
-    protected OrthographicCamera camera;
-    protected GameStateManager gsm;
+    OrthographicCamera camera;
+    GameStateManager gsm;
 
     public State(GameStateManager gsm) {
         this.camera = new OrthographicCamera();

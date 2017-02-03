@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 
 abstract class Ship {
 
-   public abstract void update(float dt);
+    public abstract void update(float dt);
 
     public abstract void move();
 

@@ -16,14 +16,14 @@ public class PlayState extends State {
     public PlayState(GameStateManager gsm) {
         super(gsm);
         //заданим область обзора для ортографической камеры и отцентрируем по середине экрана
-        background = new Texture("temp/bg_temp.png");
-//        background = new Texture("bg.gif");
+//        background = new Texture("temp/bg_temp.png");
+        background = new Texture("bg.gif");
         float fWidth = background.getWidth() / (float) GalaxyGame.WIDTH;
         float fHeight = background.getHeight() / (float) GalaxyGame.HEIGHT;
         camera.setToOrtho(false, GalaxyGame.WIDTH * fWidth, GalaxyGame.HEIGHT * fHeight);
 
         //создаем защитника
-        defender = new Defender();
+        defender = new Defender(camera.viewportWidth / 2, camera.viewportHeight * 0.1f);
 
     }
 

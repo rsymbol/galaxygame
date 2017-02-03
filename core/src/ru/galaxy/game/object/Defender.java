@@ -14,14 +14,12 @@ public class Defender extends Ship {
     private Texture texture;
     private Rectangle bound;
 
-    public Defender() {
-        this.texture = new Texture(Gdx.files.internal("temp/defender_temp.png"));
-//        this.texture = new Texture(Gdx.files.internal("defender.png"));
-        this.position = new Vector3(Gdx.graphics.getWidth() / 2 - texture.getWidth() / 2, (int)(Gdx.graphics.getHeight()*0.1), 0);
-
+    public Defender(float x, float y) {
+//        this.texture = new Texture(Gdx.files.internal("temp/defender_temp.png"));
+        this.texture = new Texture(Gdx.files.internal("defender.png"));
+        this.position = new Vector3(x, y, 0);
         this.velosity = new Vector3(0, 0, 0);
-        this.bound = new Rectangle(Gdx.graphics.getWidth() / 2 - texture.getWidth() / 2, 0,
-                texture.getWidth(), texture.getHeight());
+        this.bound = new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
     }
 
     @Override
