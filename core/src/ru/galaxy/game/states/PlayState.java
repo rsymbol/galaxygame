@@ -10,29 +10,21 @@ import ru.galaxy.game.object.Defender;
 public class PlayState extends State {
 
     private Defender defender;
-
     private Texture background;
     //private Array<Tube> tubes;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
         //заданим область обзора для ортографической камеры и отцентрируем по середине экрана
-        background = new Texture("bg.gif");
+        background = new Texture("temp/bg_temp.png");
+//        background = new Texture("bg.gif");
         float fWidth = background.getWidth() / (float) GalaxyGame.WIDTH;
         float fHeight = background.getHeight() / (float) GalaxyGame.HEIGHT;
-        float y1 = camera.viewportWidth;
         camera.setToOrtho(false, GalaxyGame.WIDTH * fWidth, GalaxyGame.HEIGHT * fHeight);
-        y1 = camera.viewportWidth;
-
-
 
         //создаем защитника
-        defender = new Defender(gsm);
+        defender = new Defender();
 
-//        tubes = new Array<Tube>();
-//
-//        for (int i = 0; i < TUBE_COUNT; i++)
-//            tubes.add(new Tube(i * (TUBE_SPACING + Tube.TUBE_WIDTH)));
     }
 
     @Override
@@ -47,7 +39,6 @@ public class PlayState extends State {
     public void update(float dt) {
         handleInput();
         defender.update(dt);
-        camera.position.x = defender.getPosition().x;
 
 //        for (int i = 0; i < tubes.size; i++) {
 //            Tube tube = tubes.get(i);
@@ -72,7 +63,7 @@ public class PlayState extends State {
         //установим матрицу проекции для нашей камеры
         sb.setProjectionMatrix(camera.combined);
         sb.begin();
-        sb.draw(background, camera.position.x - camera.viewportWidth / 2, 0);
+        sb.draw(background, 0, 0);
         sb.draw(defender.getDefender(), defender.getPosition().x, defender.getPosition().y);
 //        for (Tube tube : tubes) {
 //            sb.draw(tube.getTopTube(), tube.getPosTopTube().x, tube.getPosTopTube().y);

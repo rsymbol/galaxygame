@@ -13,8 +13,10 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-        background = new Texture("bg.gif");
+        background = new Texture("temp/bg_temp.png");
         playBtn = new Texture("playbtn.png");
+//        background = new Texture("bg.gif");
+//        playBtn = new Texture("playbtn.png");
         //заданим область обзора для ортографической камеры и отцентрируем по середине экрана
         float fWidth = background.getWidth() / (float) GalaxyGame.WIDTH;
         float fHeight = background.getHeight() / (float) GalaxyGame.HEIGHT;
