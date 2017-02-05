@@ -1,82 +1,101 @@
 package ru.galaxy.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 
-import ru.galaxy.game.GalaxyGame;
-import ru.galaxy.game.object.Defender;
+import ru.galaxy.game.object.PlayObject;
+import ru.galaxy.game.object.weapon.Shot;
+import ru.galaxy.game.object.ships.Alien;
+import ru.galaxy.game.object.ships.Defender;
+import ru.galaxy.game.util.GameUtils;
 
 public class PlayState extends State {
 
     private Defender defender;
-    private Texture background;
-    //private Array<Tube> tubes;
+    private Array<Alien> aliens;
 
-    public PlayState(GameStateManager gsm) {
-        super(gsm);
-        //заданим область обзора для ортографической камеры и отцентрируем по середине экрана
-//        background = new Texture("temp/bg_temp.png");
-        background = new Texture("bg.gif");
-        float fWidth = background.getWidth() / (float) GalaxyGame.WIDTH;
-        float fHeight = background.getHeight() / (float) GalaxyGame.HEIGHT;
-        camera.setToOrtho(false, GalaxyGame.WIDTH * fWidth, GalaxyGame.HEIGHT * fHeight);
-
-        //создаем защитника
-        defender = new Defender(camera.viewportWidth / 2, camera.viewportHeight * 0.1f);
+    public PlayState() {
+        super(new Texture(Gdx.files.internal("bg.gif")));
+//        super(gsm, new Texture(Gdx.files.internal("temp/bg_temp.png")));
+        defender = new Defender(State.getCameraWidth() / 2, State.getCameraHeight() * 0.1f);
+        aliens = GameUtils.getAliens();
 
     }
 
     @Override
     public void handleInput() {
-        if (Gdx.input.justTouched()) {
-            //defender.fire();
-            gsm.set(new MenuState(gsm));
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || defender.getX() > State.getCameraWidth() - defender.getWidth()) {
+            defender.setDirection(Input.Keys.LEFT);
+            defender.move();
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || defender.getX() < 0) {
+            defender.setDirection(Input.Keys.RIGHT);
+            defender.move();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) || defender.getY() < 0) {
+            defender.setDirection(Input.Keys.UP);
+            defender.move();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || defender.getY() > State.getCameraHeight() - defender.getHeight()) {
+            defender.setDirection(Input.Keys.DOWN);
+            defender.move();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.justTouched())
+            defender.fire(Input.Keys.UP);
+    }
+
+    private void checkCross() {
+        //defender ship & alien shot
+        for (Alien alien : aliens) {
+            for (Shot shot : alien.getShots()) {
+                if (GameUtils.isCross(defender,shot)){
+                    destroyPlayObject(defender);
+                    destroyPlayObject(shot);
+                }
+            }
+        }
+        //defender ship & alien ship
+
+        //defender shot & alien ship
+
+        //defender shot & alien shot
+    }
+
+    private void destroyPlayObject(PlayObject playObject){
+
     }
 
     @Override
     public void update(float dt) {
         handleInput();
         defender.update(dt);
-
-//        for (int i = 0; i < tubes.size; i++) {
-//            Tube tube = tubes.get(i);
-//
-//            if (camera.position.x - (camera.viewportWidth / 2) > tube.getPosTopTube().x + tube.getTopTube().getWidth()) {
-//                tube.reposition(tube.getPosTopTube().x + ((Tube.TUBE_WIDTH + TUBE_SPACING) * TUBE_COUNT));
-//            }
-//            if (tube.collides(bird.getBounds())) {
-//                gsm.set(new GameOver(gsm));
-//            }
-//        }
-//
-//        if (bird.getPosition().y < GROUND_Y_OFFSET + ground.getHeight())
-//            gsm.set(new GameOver(gsm));
-
-        camera.update();
-
+        for (Alien alien : aliens) alien.update(dt);
+        checkCross();
+        getCamera().update();
     }
 
     @Override
-    public void render(SpriteBatch sb) {
-        //установим матрицу проекции для нашей камеры
-        sb.setProjectionMatrix(camera.combined);
-        sb.begin();
-        sb.draw(background, 0, 0);
-        sb.draw(defender.getDefender(), defender.getPosition().x, defender.getPosition().y);
-//        for (Tube tube : tubes) {
-//            sb.draw(tube.getTopTube(), tube.getPosTopTube().x, tube.getPosTopTube().y);
-//            sb.draw(tube.getBottomTube(), tube.getPosBotTube().x, tube.getPosBotTube().y);
-//        }
-        sb.end();
+    public void render() {
+        getBatch().begin();
+        getBatch().draw(getTexture(), 0, 0);
+        getBatch().draw(defender.getTexture(), defender.getX(), defender.getY());
+        for (Shot shot : defender.getShots())
+            getBatch().draw(shot.getTexture(), shot.getX(), shot.getY());
+        for (Alien alien : aliens) {
+            getBatch().draw(alien.getTexture(), alien.getX(), alien.getY());
+            for (Shot shot : alien.getShots())
+                getBatch().draw(shot.getTexture(), shot.getX(), shot.getY());
+        }
+        getBatch().end();
     }
 
     @Override
     public void dispose() {
-        background.dispose();
+        super.dispose();
         defender.dispose();
-//        for (Tube tube : tubes) tube.dispose();
+        for (Alien alien : aliens) alien.dispose();
     }
 
 }

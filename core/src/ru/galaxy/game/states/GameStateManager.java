@@ -1,51 +1,47 @@
 package ru.galaxy.game.states;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.util.Stack;
 
 public class GameStateManager {
 
-    //экраны
     private Stack<State> states;
-    private SpriteBatch batch;
 
     public GameStateManager() {
-        states = new Stack<State>();
-        batch = new SpriteBatch();
+        states = new Stack<>();
     }
 
     //добавление экрана
-    public void push(State state){
+    public void push(State state) {
         states.push(state);
     }
 
     //извлекает верхний элемент удаляя его из стека и освобождаем ресурсы
-    public void pop(){
+    public void pop() {
         states.pop().dispose();
     }
 
     //извлекает верхний элемент удаляя его из стека и освобождаем ресурсы
     //помещает переданный экран в вершину стека
-    public void set(State state){
+    public void set(State state) {
         states.pop().dispose();
         states.push(state);
     }
 
     //обновление верхнего экрана через промежуток времени
-    public void update(float dt){
+    public void update(float dt) {
         //peek возвращает верхний элемент не удаляя его из стека
         states.peek().update(dt);
     }
 
     //отрисовка верхнего экрана через промежуток времени
-    public void render(){
-        states.peek().render(batch);
+    public void render() {
+        states.peek().render();
     }
 
-    public void dispose(){
-        batch.dispose();
-        pop();
+    public void dispose() {
+        for (State state : states) state.dispose();
+        states = null;
+        State.getBatch().dispose();
     }
 
 }
