@@ -5,22 +5,21 @@ import com.badlogic.gdx.graphics.Texture;
 
 import ru.galaxy.game.GalaxyGame;
 
-public class MenuState extends State {
+public class YouWin extends State {
 
-    private Texture playBtn;
+    private Texture youWin;
 
-    public MenuState() {
+    public YouWin() {
         super(new Texture("bg.gif"));
 //        super(gsm, new Texture("temp/bg_temp.png"));
-        playBtn = new Texture("playbtn.png");
+        youWin = new Texture("youwin.png");
     }
 
     @Override
     public void handleInput() {
         if (Gdx.input.justTouched()) {
             //удаляем верхний экран и прописывам новый PlayState
-            GalaxyGame.set(new PlayState());
-            GalaxyGame.setRun(true);
+            GalaxyGame.set(new MenuState());
         }
     }
 
@@ -34,13 +33,13 @@ public class MenuState extends State {
         //установим матрицу проекции для нашей камеры
         getBatch().begin();
         getBatch().draw(getTexture(), 0, 0);
-        getBatch().draw(playBtn, State.getCameraWidth() / 2 - playBtn.getWidth() / 2, State.getCameraHeight() / 2);
+        getBatch().draw(youWin, State.getCameraWidth() / 2 - youWin.getWidth() / 2, State.getCameraHeight() / 2);
         getBatch().end();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        playBtn.dispose();
+        youWin.dispose();
     }
 }

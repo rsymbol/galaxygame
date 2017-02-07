@@ -2,7 +2,10 @@ package ru.galaxy.game.object.weapon;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.Iterator;
+
 import ru.galaxy.game.object.PlayObject;
+import ru.galaxy.game.states.State;
 
 public abstract class Shot extends PlayObject{
 
@@ -11,7 +14,17 @@ public abstract class Shot extends PlayObject{
     }
 
     public void update(){
-        move();
+        //delete out shot and update other
+        Iterator<Shot> iterator = PlayObject.iterator();
+        while (iterator.hasNext()) {
+            Shot shot = iterator.next();
+            if (shot.getX() < -shot.getWidth() || shot.getX() > State.getCameraWidth() ||
+                    shot.getY() < -shot.getWidth() || shot.getY() > State.getCameraHeight()) {
+                iterator.remove();
+            } else {
+                shot.move();
+            }
+        }
     }
 
 }
