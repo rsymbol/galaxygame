@@ -10,8 +10,8 @@ public class MenuState extends State {
     private Texture playBtn;
 
     public MenuState() {
-        super(new Texture("bg.gif"));
-//        super(gsm, new Texture("temp/bg_temp.png"));
+//        super(new Texture("bg.gif"));
+        super(new Texture("temp/bg_temp.png"));
         playBtn = new Texture("playbtn.png");
     }
 

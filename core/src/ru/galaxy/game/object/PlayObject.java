@@ -92,6 +92,7 @@ public abstract class PlayObject {
     }
 
     public void move() {
+        System.out.println(Gdx.graphics.getDeltaTime() * speed);
         switch (direction){
             case Input.Keys.LEFT:
                 setX(getX() - Gdx.graphics.getDeltaTime() * speed);

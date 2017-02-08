@@ -9,18 +9,23 @@ import ru.galaxy.game.object.PlayObject;
 import ru.galaxy.game.object.weapon.Shot;
 import ru.galaxy.game.object.ships.Alien;
 import ru.galaxy.game.object.ships.Defender;
+import ru.galaxy.game.util.Animation;
 import ru.galaxy.game.util.GameUtils;
 
 public class PlayState extends State {
 
     private Defender defender;
     private Array<Alien> aliens;
+//    private Array<Animation> expls;
+//    Animation expl;
 
     public PlayState() {
-        super(new Texture(Gdx.files.internal("bg.gif")));
-//        super(gsm, new Texture(Gdx.files.internal("temp/bg_temp.png")));
+//        super(new Texture(Gdx.files.internal("bg.gif")));
+        super(new Texture(Gdx.files.internal("temp/bg_temp.png")));
         defender = new Defender(State.getCameraWidth() / 2, State.getCameraHeight() * 0.1f);
         aliens = GameUtils.getAliens();
+
+//        expl = new Animation();
 
     }
 
