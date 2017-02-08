@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class StandartShot extends Shot {
 
     public StandartShot(float x, float y, int direction) {
-//        super(x, y, 200, direction, new Texture(Gdx.files.internal("shot.png")));
-        super(x, y, 200, direction, new Texture(Gdx.files.internal("temp/shot_temp.png")));
+        super(x, y, 200, direction, new Texture(Gdx.files.internal("rocket.png")));
     }
 
 }

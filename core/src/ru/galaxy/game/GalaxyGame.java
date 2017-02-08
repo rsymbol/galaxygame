@@ -16,6 +16,7 @@ public class GalaxyGame extends ApplicationAdapter {
     public static final String TITLE = "Galaxy";
     private static GameStateManager gsm = new GameStateManager();
     private static Music music;
+    private static boolean isRun;
 
     @Override
     public void create() {
@@ -29,6 +30,14 @@ public class GalaxyGame extends ApplicationAdapter {
 
     public static void set (State state){
         gsm.push(state);
+    }
+
+    public static boolean isRun() {
+        return isRun;
+    }
+
+    public static void setRun(boolean run) {
+        isRun = run;
     }
 
     @Override
