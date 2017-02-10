@@ -9,15 +9,13 @@ import java.util.Random;
 public class Alien extends Ship {
 
     public Alien(float x, float y) {
-//        super(x, y, 200, new Texture(Gdx.files.internal("alien.png")));
-        super(x, y, 1, new Texture(Gdx.files.internal("temp/alien_temp.png")));
+//        super(x, y, new Texture(Gdx.files.internal("alien.png")), Input.Keys.DOWN);
+        super(x, y, new Texture(Gdx.files.internal("temp/alien_temp.png")), Input.Keys.DOWN);
     }
 
     public void update(float dt) {
-        if (new Random().nextFloat() > 0.95f) setDirection(new Random().nextInt(4) + 19);
-        super.update(dt);
-        move();
-        fire(Input.Keys.DOWN);
-
+        if (new Random().nextFloat() > 0.98f) setDirection(new Random().nextInt(4) + 19);
+        move(dt);
+        if (new Random().nextFloat() > 0.33f) fire();
     }
 }

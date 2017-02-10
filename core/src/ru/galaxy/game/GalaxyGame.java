@@ -14,6 +14,7 @@ public class GalaxyGame extends ApplicationAdapter {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
     public static final String TITLE = "Galaxy";
+
     private static GameStateManager gsm = new GameStateManager();
     private static Music music;
     private static boolean isRun;
